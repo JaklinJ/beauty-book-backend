@@ -1,5 +1,6 @@
 const Salon = require("../models/Salon");
 const Customer = require("../models/Customer");
+const cron = require("node-cron");
 
 cron.schedule("*/14 * * * *", async () => {
   console.log("⏱ Running customer cron job");
