@@ -2,18 +2,16 @@ const express = require('express');
 const Customer = require('../models/Customer');
 const auth = require('../middleware/auth');
 const router = express.Router();
+const { getCustomersBySalon } = require("../services/customerService");
 
 // Get all customers for a salon (alphabetically ordered)
-router.get('/', auth, async (req, res) => {
+router.get("/", auth, async (req, res) => {
   try {
-    const customers = await Customer.find({ salonId: req.salon._id })
-      .sort({ name: 1 })
-      .select('-__v');
-
+    const customers = await getCustomersBySalon(req.salon._id);
     res.json(customers);
   } catch (error) {
-    console.error('Get customers error:', error);
-    res.status(500).json({ message: 'Server error' });
+    console.error("Get customers error:", error);
+    res.status(500).json({ message: "Server error" });
   }
 });
 

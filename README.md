@@ -9,27 +9,34 @@ Backend API for the laser hair removal beauty salon mobile app.
 npm install
 ```
 
-2. Create a `.env` file in the backend directory with the following content:
-```
+2. Create a `.env` file in the backend directory:
+```env
 PORT=5000
-MONGODB_URI=mongodb://localhost:27017/beauty-salon
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/beauty-salon?retryWrites=true&w=majority
 JWT_SECRET=your-secret-key-change-this-in-production
 ```
 
-   Update the values:
-   - `MONGODB_URI`: Your MongoDB connection string (use `mongodb://localhost:27017/beauty-salon` for local MongoDB)
-   - `JWT_SECRET`: A random secret string for JWT token signing (use a strong, random string in production)
+   - **MONGODB_URI**: Get this from MongoDB Atlas (see `../MONGODB_ATLAS_SETUP.md`)
+   - **JWT_SECRET**: A random secret string for JWT token signing
 
-   See `ENV_SETUP.md` for detailed instructions.
-
-4. Make sure MongoDB is running on your system.
-
-5. Start the server:
+3. Start the server:
 ```bash
 npm run dev
 ```
 
 The server will run on `http://localhost:5000`
+
+## Deployment
+
+When deploying to cloud (Railway, Render, Heroku, etc.):
+
+1. **Set up MongoDB Atlas** (see `../MONGODB_ATLAS_SETUP.md`)
+2. **Add environment variables** in your deployment platform:
+   - `MONGODB_URI` - Your MongoDB Atlas connection string
+   - `JWT_SECRET` - Your JWT secret
+   - `PORT` - Usually auto-set by platform
+
+3. Make sure your deployment platform has Node.js support
 
 ## API Endpoints
 
@@ -55,3 +62,8 @@ The server will run on `http://localhost:5000`
 
 All endpoints except auth require a Bearer token in the Authorization header.
 
+## Important Notes
+
+- **For cloud deployment**: You MUST use MongoDB Atlas (cloud database). Local MongoDB will not work.
+- The `MONGODB_URI` environment variable is **required** - the server will not start without it.
+- Never commit `.env` file to version control.
