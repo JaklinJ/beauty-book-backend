@@ -10,14 +10,6 @@ npm install
 ```
 
 2. Create a `.env` file in the backend directory:
-```env
-PORT=5000
-MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/beauty-salon?retryWrites=true&w=majority
-JWT_SECRET=your-secret-key-change-this-in-production
-```
-
-   - **MONGODB_URI**: Get this from MongoDB Atlas (see `../MONGODB_ATLAS_SETUP.md`)
-   - **JWT_SECRET**: A random secret string for JWT token signing
 
 3. Start the server:
 ```bash
@@ -62,8 +54,3 @@ When deploying to cloud (Railway, Render, Heroku, etc.):
 
 All endpoints except auth require a Bearer token in the Authorization header.
 
-## Important Notes
-
-- **For cloud deployment**: You MUST use MongoDB Atlas (cloud database). Local MongoDB will not work.
-- The `MONGODB_URI` environment variable is **required** - the server will not start without it.
-- Never commit `.env` file to version control.
