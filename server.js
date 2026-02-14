@@ -14,6 +14,7 @@ app.use(express.json());
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/customers', require('./routes/customers'));
 app.use('/api/appointments', require('./routes/appointments'));
+app.use('/privacy', require('./routes/privacy'));
 
 app.get("/health", (req, res) => {
   res.send("Server is awake ✅");
