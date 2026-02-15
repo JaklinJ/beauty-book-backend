@@ -9,7 +9,7 @@ const privacyPolicyHTML = `
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Политика за поверителност - Beauty Salon</title>
+    <title>Политика за поверителност - Laser Book Pro</title>
     <style>
         * {
             margin: 0;
@@ -88,7 +88,7 @@ const privacyPolicyHTML = `
 
         <h2>1. Въведение</h2>
         <p>
-            Добре дошли в Beauty Salon (Lazer Book Pro). Ние се ангажираме да защитаваме вашата поверителност и лични данни. 
+            Добре дошли в Lazer Book Pro. Ние се ангажираме да защитаваме вашата поверителност и лични данни. 
             Тази Политика за поверителност обяснява как събираме, използваме, съхраняваме и защитаваме вашата информация 
             когато използвате нашето приложение.
         </p>
@@ -199,11 +199,11 @@ const privacyPolicyHTML = `
         <div class="contact-info">
             <p>Ако имате въпроси или заявки относно тази Политика за поверителност или вашите лични данни, моля свържете се с нас:</p>
             <p><strong>Имейл:</strong> privacy@beautysalon.app</p>
-            <p><strong>Приложение:</strong> Beauty Salon (Lazer Book Pro)</p>
+            <p><strong>Приложение:</strong> Lazer Book Pro</p>
         </div>
 
         <div class="footer">
-            <p>&copy; ${new Date().getFullYear()} Beauty Salon. Всички права запазени.</p>
+            <p>&copy; ${new Date().getFullYear()} Laser Book Pro. Всички права запазени.</p>
         </div>
     </div>
 </body>
