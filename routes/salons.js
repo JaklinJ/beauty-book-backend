@@ -33,8 +33,7 @@ router.delete("/account", auth, async (req, res) => {
   session.startTransaction();
 
   try {
-    const salonId = new mongoose.Types.ObjectId(req.user.id);
-    console.log(req.user);
+    const salonId = new mongoose.Types.ObjectId(req.salon._id);
     console.log(req.salon);
 
     await Appointment.deleteMany({ salonId: salonId }).session(session);
