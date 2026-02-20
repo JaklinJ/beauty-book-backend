@@ -3,6 +3,7 @@ const Customer = require("../models/Customer");
 const auth = require("../middleware/auth");
 const router = express.Router();
 const Salon = require("../models/Salon");
+const mongoose = require('mongoose');
 
 //update salon info
 router.put("/profile", auth, async (req, res) => {
