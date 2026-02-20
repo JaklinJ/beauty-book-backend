@@ -34,8 +34,8 @@ router.delete("/account", auth, async (req, res) => {
   try {
     const salonId = req.salon._id;
 
-    await Appointment.deleteMany({ salon: salonId }).session(session);
-    await Customer.deleteMany({ salon: salonId }).session(session);
+    await Appointment.deleteMany({ salonId: salonId }).session(session);
+    await Customer.deleteMany({ salonId: salonId }).session(session);
     const salon = await Salon.findByIdAndDelete(salonId).session(session);
 
     if (!salon) {
