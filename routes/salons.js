@@ -1,5 +1,6 @@
 const express = require("express");
 const Customer = require("../models/Customer");
+const Appointment = require("../models/Appointment");
 const auth = require("../middleware/auth");
 const router = express.Router();
 const Salon = require("../models/Salon");
