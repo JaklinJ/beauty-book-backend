@@ -27,4 +27,35 @@ router.put("/profile", auth, async (req, res) => {
   }
 });
 
+router.delete("/account", auth, async (req, res) => {
+  const session = await mongoose.startSession();
+  session.startTransaction();
+
+  try {
+    const salonId = req.salon._id;
+
+    await Appointment.deleteMany({ salon: salonId }).session(session);
+    await Customer.deleteMany({ salon: salonId }).session(session);
+    const salon = await Salon.findByIdAndDelete(salonId).session(session);
+
+    if (!salon) {
+      await session.abortTransaction();
+      session.endSession();
+      return res.status(404).json({ message: "Salon not found" });
+    }
+
+    await session.commitTransaction();
+    session.endSession();
+
+    res.json({ message: "Salon account and all related data deleted successfully" });
+
+  } catch (error) {
+    await session.abortTransaction();
+    session.endSession();
+    console.error("Delete account error:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+
 module.exports = router;
