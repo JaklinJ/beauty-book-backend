@@ -184,10 +184,12 @@ router.get('/customer/:customerId/progress', auth, async (req, res) => {
       });
     });
 
-    // Calculate average power for each zone
+    // Calculate average and last power for each zone
     Object.keys(zoneProgress).forEach(zone => {
-      const totalPower = zoneProgress[zone].treatments.reduce((sum, t) => sum + t.power, 0);
-      zoneProgress[zone].averagePower = totalPower / zoneProgress[zone].treatments.length;
+      const treatments = zoneProgress[zone].treatments;
+      const totalPower = treatments.reduce((sum, t) => sum + t.power, 0);
+      zoneProgress[zone].averagePower = totalPower / treatments.length;
+      zoneProgress[zone].lastPower = treatments[treatments.length - 1].power;
       if (zoneProgress[zone].minPower === Infinity) {
         zoneProgress[zone].minPower = 0;
       }
