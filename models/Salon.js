@@ -26,7 +26,21 @@ const salonSchema = new mongoose.Schema({
   address: {
     type: String,
     trim: true
-  }
+  },
+  stripeCustomerId: {
+    type: String,
+  },
+  stripeSubscriptionId: {
+    type: String,
+  },
+  subscriptionStatus: {
+    type: String,
+    enum: ['trialing', 'active', 'past_due', 'canceled', 'inactive'],
+    default: 'trialing',
+  },
+  trialEndsAt: {
+    type: Date,
+  },
 }, {
   timestamps: true
 });
