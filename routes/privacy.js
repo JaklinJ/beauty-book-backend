@@ -5,11 +5,11 @@ const path = require('path');
 // Privacy Policy HTML
 const privacyPolicyHTML = `
 <!DOCTYPE html>
-<html lang="bg">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Политика за поверителност - Laser Book Pro</title>
+    <title>Privacy Policy - Laseria</title>
     <style>
         * {
             margin: 0;
@@ -17,193 +17,204 @@ const privacyPolicyHTML = `
             box-sizing: border-box;
         }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.7;
+            color: #1a1a1a;
+            background: linear-gradient(135deg, #fef9f0 0%, #fde68a 100%);
+            min-height: 100vh;
+            padding: 24px 16px;
         }
         .container {
-            max-width: 800px;
+            max-width: 720px;
             margin: 0 auto;
-            background: white;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background: #ffffff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.10);
         }
-        h1 {
-            color: #6366f1;
-            margin-bottom: 10px;
-            font-size: 32px;
+        .header {
+            background: linear-gradient(135deg, #F59E0B 0%, #F97316 100%);
+            padding: 36px 40px 28px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
         }
-        h2 {
-            color: #4f46e5;
-            margin-top: 30px;
-            margin-bottom: 15px;
+        .shield-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(255,255,255,0.25);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 24px;
-            border-bottom: 2px solid #e5e7eb;
-            padding-bottom: 10px;
+            flex-shrink: 0;
         }
-        h3 {
-            color: #6366f1;
-            margin-top: 20px;
-            margin-bottom: 10px;
-            font-size: 18px;
+        .header-text h1 {
+            color: #ffffff;
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
         }
-        p {
-            margin-bottom: 15px;
-            text-align: justify;
+        .header-text .last-updated {
+            color: rgba(255,255,255,0.80);
+            font-size: 13px;
+            margin-top: 4px;
         }
-        ul {
-            margin-left: 20px;
-            margin-bottom: 15px;
+        .body {
+            padding: 32px 40px 40px;
         }
-        li {
-            margin-bottom: 8px;
-        }
-        .last-updated {
+        .intro {
             color: #6b7280;
-            font-style: italic;
-            margin-bottom: 30px;
+            font-size: 15px;
+            margin-bottom: 28px;
+            line-height: 1.7;
         }
-        .contact-info {
-            background: #f3f4f6;
-            padding: 20px;
-            border-radius: 8px;
-            margin-top: 30px;
+        .section {
+            border-left: 4px solid #F59E0B;
+            background: #fafafa;
+            border-radius: 0 12px 12px 0;
+            padding: 20px 22px;
+            margin-bottom: 16px;
+        }
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 10px;
+        }
+        .section-body {
+            font-size: 14px;
+            color: #4b5563;
+            line-height: 1.75;
+            white-space: pre-line;
+        }
+        .section-body strong {
+            color: #111827;
+            font-weight: 600;
         }
         .footer {
-            text-align: center;
-            margin-top: 40px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 28px;
             padding-top: 20px;
-            border-top: 1px solid #e5e7eb;
-            color: #6b7280;
+            border-top: 1px solid #f3f4f6;
+            color: #9ca3af;
+            font-size: 12px;
+        }
+        @media (max-width: 600px) {
+            .header { padding: 28px 24px 22px; }
+            .body { padding: 24px 20px 32px; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Политика за поверителност</h1>
-        <p class="last-updated">Последна актуализация: ${new Date().toLocaleDateString('bg-BG')}</p>
-
-        <h2>1. Въведение</h2>
-        <p>
-            Добре дошли в Lazer Book Pro. Ние се ангажираме да защитаваме вашата поверителност и лични данни. 
-            Тази Политика за поверителност обяснява как събираме, използваме, съхраняваме и защитаваме вашата информация 
-            когато използвате нашето приложение.
-        </p>
-
-        <h2>2. Информация, която събираме</h2>
-        
-        <h3>2.1. Информация за салона</h3>
-        <p>Когато регистрирате салон в нашето приложение, събираме следната информация:</p>
-        <ul>
-            <li>Име на салона</li>
-            <li>Имейл адрес</li>
-            <li>Парола (шифрована)</li>
-            <li>Телефонен номер (по избор)</li>
-            <li>Адрес (по избор)</li>
-        </ul>
-
-        <h3>2.2. Информация за клиентите</h3>
-        <p>Когато добавяте клиенти в системата, събираме:</p>
-        <ul>
-            <li>Име и фамилия</li>
-            <li>Телефонен номер (по избор)</li>
-            <li>Имейл адрес (по избор)</li>
-            <li>Бележки и допълнителна информация (по избор)</li>
-        </ul>
-
-        <h3>2.3. Информация за резервациите</h3>
-        <p>Когато създавате резервации, съхраняваме:</p>
-        <ul>
-            <li>Дата и час на резервацията</li>
-            <li>Информация за процедурите</li>
-            <li>Бележки (по избор)</li>
-        </ul>
-
-        <h3>2.4. Автоматично събрана информация</h3>
-        <p>Може да събираме техническа информация като:</p>
-        <ul>
-            <li>IP адрес</li>
-            <li>Тип устройство и операционна система</li>
-            <li>Информация за използването на приложението</li>
-        </ul>
-
-        <h2>3. Как използваме вашата информация</h2>
-        <p>Използваме събраната информация за следните цели:</p>
-        <ul>
-            <li>За да предоставим и подобрим нашите услуги</li>
-            <li>За управление на акаунти и автентификация</li>
-            <li>За управление на клиентска база данни</li>
-            <li>За управление на резервации и процедури</li>
-            <li>За комуникация с вас относно услугите</li>
-            <li>За да отговорим на вашите заявки и заявки за поддръжка</li>
-            <li>За да спазваме правните задължения</li>
-        </ul>
-
-        <h2>4. Споделяне на информация</h2>
-        <p>
-            Ние не продаваме, не отдаваме под наем и не споделяме вашата лична информация с трети страни, 
-            освен в следните случаи:
-        </p>
-        <ul>
-            <li>Когато е необходимо за предоставяне на услугите (например хостинг провайдъри)</li>
-            <li>Когато се изисква от закон или съдебна заповед</li>
-            <li>За защита на нашите права, собственост или безопасност</li>
-            <li>С вашето изрично съгласие</li>
-        </ul>
-
-        <h2>5. Съхранение и защита на данните</h2>
-        <p>
-            Вашите данни се съхраняват сигурно на защитени сървъри. Използваме индустриални стандарти за сигурност, 
-            включително шифроване на пароли и защитени връзки (HTTPS). Паролите се съхраняват в хеширан формат и 
-            никога не се разкриват.
-        </p>
-        <p>
-            Съхраняваме вашите данни докато вашият акаунт е активен или докато е необходимо за предоставяне на услугите. 
-            Можете да заявите изтриване на вашите данни по всяко време.
-        </p>
-
-        <h2>6. Вашите права</h2>
-        <p>Съгласно GDPR и приложимото законодателство, имате правото на:</p>
-        <ul>
-            <li><strong>Достъп:</strong> Да поискате копие на вашите лични данни</li>
-            <li><strong>Корекция:</strong> Да поискате корекция на неточни данни</li>
-            <li><strong>Изтриване:</strong> Да поискате изтриване на вашите данни</li>
-            <li><strong>Ограничаване:</strong> Да поискате ограничаване на обработката</li>
-            <li><strong>Преносимост:</strong> Да получите вашите данни в структуриран формат</li>
-            <li><strong>Възражение:</strong> Да възразите срещу обработката на вашите данни</li>
-            <li><strong>Оттегляне на съгласие:</strong> Да оттеглите съгласието си по всяко време</li>
-        </ul>
-
-        <h2>7. Бисквитки и технологии за проследяване</h2>
-        <p>
-            Нашето приложение може да използва бисквитки и подобни технологии за подобряване на функционалността. 
-            Можете да контролирате използването на бисквитки чрез настройките на вашето устройство.
-        </p>
-
-        <h2>8. Деца</h2>
-        <p>
-            Нашето приложение не е предназначено за лица под 18 години. Ние не събираме умишлено лична информация 
-            от деца. Ако установим, че сме събрали информация от дете, ще предприемем стъпки за изтриването й.
-        </p>
-
-        <h2>9. Промени в политиката за поверителност</h2>
-        <p>
-            Може да актуализираме тази Политика за поверителност от време на време. Ще уведомим за значителни промени 
-            чрез приложението или по имейл. Препоръчваме ви редовно да преглеждате тази политика.
-        </p>
-
-        <h2>10. Контакти</h2>
-        <div class="contact-info">
-            <p>Ако имате въпроси или заявки относно тази Политика за поверителност или вашите лични данни, моля свържете се с нас:</p>
-            <p><strong>Имейл:</strong> privacy@beautysalon.app</p>
-            <p><strong>Приложение:</strong> Lazer Book Pro</p>
+        <div class="header">
+            <div class="shield-icon">&#128737;</div>
+            <div class="header-text">
+                <h1>Privacy Policy</h1>
+                <div class="last-updated">Last updated: March 2026</div>
+            </div>
         </div>
 
-        <div class="footer">
-            <p>&copy; ${new Date().getFullYear()} Laser Book Pro. Всички права запазени.</p>
+        <div class="body">
+            <p class="intro">
+                This Privacy Policy explains how Laseria ("we", "our", or "us") collects, uses, and protects your information when you use our mobile application. By using the app, you agree to the practices described in this policy.
+            </p>
+
+            <div class="section">
+                <div class="section-title">1. Information We Collect</div>
+                <div class="section-body"><strong>Account Information:</strong>
+When you register, we collect your salon name, email address, phone number, and business address.
+
+<strong>Customer Data:</strong>
+You may enter customer names, phone numbers, email addresses, and notes. This data belongs to you and is stored securely on our servers.
+
+<strong>Appointment Data:</strong>
+We store appointment records you create, including dates, services, and associated customer information.
+
+<strong>Usage Data:</strong>
+We may collect anonymous technical data such as device type, operating system version, and app usage patterns to improve performance.
+
+<strong>Device Features:</strong>
+When you tap a customer's phone number, the app uses your device's native dialer to initiate the call. We do not collect, transmit, or store any call data, call history, or phone numbers beyond what you have already entered into the app.</div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">2. How We Use Your Information</div>
+                <div class="section-body">• Provide and operate the app and its features
+• Authenticate your account and keep it secure
+• Store and retrieve your salon and customer records
+• Respond to support requests
+• Improve and maintain the application
+• Comply with legal obligations</div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">3. Data Sharing &amp; Disclosure</div>
+                <div class="section-body">We do <strong>not</strong> sell, rent, or trade your personal data to third parties.
+
+We may share data only in these limited cases:
+• With service providers who help us operate the app (e.g., cloud hosting), under strict confidentiality agreements
+• When required by law, court order, or governmental authority
+• To protect the rights, safety, or property of our users or the public</div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">4. Data Retention &amp; Deletion</div>
+                <div class="section-body">We retain your data for as long as your account is active.
+
+You can permanently delete your account and all associated data at any time via <strong>Profile → Delete Account</strong>. Deletion is immediate and irreversible — all salon data, customer records, and appointments are permanently removed from our servers.
+
+Anonymous usage analytics, if collected, are retained for up to 12 months.</div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">5. Your Rights</div>
+                <div class="section-body">Depending on your location, you may have the right to:
+• <strong>Access</strong> the personal data we hold about you
+• <strong>Correct</strong> inaccurate information via Edit Profile
+• <strong>Delete</strong> your account and all associated data
+• <strong>Export</strong> your data upon request
+• <strong>Object</strong> to certain processing of your information
+
+To exercise any of these rights, contact us at the address below.</div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">6. Security</div>
+                <div class="section-body">We use industry-standard security measures to protect your data, including:
+• Encrypted data transmission (HTTPS/TLS)
+• Secure password hashing (bcrypt)
+• Token-based authentication (JWT)
+• Access controls limiting who can view your data
+
+No method of transmission over the internet is 100% secure, and we cannot guarantee absolute security.</div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">7. Children's Privacy</div>
+                <div class="section-body">This app is intended for business use by adults. We do not knowingly collect personal information from anyone under the age of 13 (or 16 in the EU). If you believe a minor has provided us with personal data, please contact us and we will delete it promptly.</div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">8. Changes to This Policy</div>
+                <div class="section-body">We may update this Privacy Policy from time to time. When we do, we will update the "Last updated" date at the top. Continued use of the app after changes constitutes acceptance of the revised policy. We encourage you to review this policy periodically.</div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">9. Contact Us</div>
+                <div class="section-body">If you have any questions, requests, or concerns about this Privacy Policy or your data, please contact us:
+
+<strong>LASERIA</strong>
+<a href="mailto:laseriaapp@gmail.com" style="color:#F59E0B;font-weight:600;">laseriaapp@gmail.com</a></div>
+            </div>
+
+            <div class="footer">
+                &#128737; Compliant with Apple App Store &amp; Google Play Store privacy requirements
+            </div>
         </div>
     </div>
 </body>
