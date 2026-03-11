@@ -9,8 +9,6 @@ const app = express();
 // Middleware
 app.use(cors());
 
-// Stripe webhook must receive raw body — mount BEFORE express.json()
-app.use('/api/stripe/webhook', express.raw({ type: 'application/json' }));
 app.use(express.json());
 
 // Routes
@@ -18,7 +16,6 @@ app.use('/api/auth', require('./routes/auth'));
 app.use('/api/customers', require('./routes/customers'));
 app.use('/api/salons', require('./routes/salons'));
 app.use('/api/appointments', require('./routes/appointments'));
-app.use('/api/stripe', require('./routes/stripe'));
 app.use('/privacy', require('./routes/privacy'));
 
 app.get("/health", (req, res) => {

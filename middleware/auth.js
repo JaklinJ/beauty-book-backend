@@ -16,24 +16,6 @@ const auth = async (req, res, next) => {
       return res.status(401).json({ message: 'Token is not valid' });
     }
 
-    // Check subscription — block if trial expired or canceled
-    const status = salon.subscriptionStatus;
-    const trialExpired =
-      status === 'trialing' && salon.trialEndsAt && new Date() > salon.trialEndsAt;
-
-    if (trialExpired) {
-      salon.subscriptionStatus = 'inactive';
-      await salon.save();
-    }
-
-    const blocked = trialExpired || status === 'inactive' || status === 'canceled';
-    if (blocked) {
-      return res.status(402).json({
-        message: 'Subscription required',
-        subscriptionStatus: salon.subscriptionStatus,
-      });
-    }
-
     req.salon = salon;
     next();
   } catch (error) {
