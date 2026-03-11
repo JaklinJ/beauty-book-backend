@@ -82,14 +82,16 @@ router.post('/login', async (req, res) => {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
 
-    // If trialing but trial has expired, mark as inactive
-    if (
-      salon.subscriptionStatus === 'trialing' &&
-      salon.trialEndsAt &&
-      new Date() > salon.trialEndsAt
-    ) {
-      salon.subscriptionStatus = 'inactive';
-      await salon.save();
+    if (salon.subscriptionStatus === 'trialing') {
+      if (!salon.trialEndsAt) {
+        // Existing account without a trial end date — grant 15 days from now
+        salon.trialEndsAt = new Date(Date.now() + 15 * 24 * 60 * 60 * 1000);
+        await salon.save();
+      } else if (new Date() > salon.trialEndsAt) {
+        // Trial expired — mark as inactive
+        salon.subscriptionStatus = 'inactive';
+        await salon.save();
+      }
     }
 
     const token = generateToken(salon._id);
