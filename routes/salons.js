@@ -9,9 +9,17 @@ const mongoose = require('mongoose');
 //update salon info
 router.put("/profile", auth, async (req, res) => {
   try {
-    const { name, email, phone, address } = req.body;
+    const { name, phone, address } = req.body;
+    const email = req.body.email?.toLowerCase().trim();
 
-    const salon = await Salon.findOneAndUpdate(req.salon._id, {
+    if (email && email !== req.salon.email) {
+      const existing = await Salon.findOne({ email });
+      if (existing) {
+        return res.status(400).json({ message: "An account with this email already exists" });
+      }
+    }
+
+    const salon = await Salon.findByIdAndUpdate(req.salon._id, {
       name,
       email,
       phone,

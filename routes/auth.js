@@ -21,11 +21,16 @@ const salonPayload = (salon) => ({
 // Register salon
 router.post('/register', async (req, res) => {
   try {
-    const { name, email, password, phone, address } = req.body;
+    const { name, password, phone, address } = req.body;
+    const email = req.body.email?.toLowerCase().trim();
+
+    if (!email) {
+      return res.status(400).json({ message: 'Email is required' });
+    }
 
     const existingSalon = await Salon.findOne({ email });
     if (existingSalon) {
-      return res.status(400).json({ message: 'Salon with this email already exists' });
+      return res.status(400).json({ message: 'An account with this email already exists' });
     }
 
     const salon = new Salon({
@@ -50,7 +55,8 @@ router.post('/register', async (req, res) => {
 // Login salon
 router.post('/login', async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { password } = req.body;
+    const email = req.body.email?.toLowerCase().trim();
 
     const salon = await Salon.findOne({ email });
     if (!salon) {
