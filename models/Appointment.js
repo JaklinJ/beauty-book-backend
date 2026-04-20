@@ -11,6 +11,16 @@ const treatmentSchema = new mongoose.Schema({
     required: true,
     min: 0
   },
+  pulseWidth: {
+    type: Number,
+    default: null,
+    min: 0
+  },
+  frequency: {
+    type: Number,
+    default: null,
+    min: 0
+  },
   price: {
     type: Number,
     default: 0,
