@@ -176,7 +176,11 @@ router.get('/customer/:customerId/progress', auth, async (req, res) => {
         
         zoneProgress[zone].treatments.push({
           date: appointment.date,
-          power: treatment.power
+          power: treatment.power,
+          pulseWidth: treatment.pulseWidth ?? null,
+          frequency: treatment.frequency ?? null,
+          price: treatment.price ?? 0,
+          notes: appointment.notes ?? null,
         });
         zoneProgress[zone].totalVisits++;
         zoneProgress[zone].maxPower = Math.max(zoneProgress[zone].maxPower, treatment.power);
