@@ -44,6 +44,17 @@ const appointmentSchema = new mongoose.Schema({
     required: true
   },
   treatments: [treatmentSchema],
+  skinType: {
+    type: Number,
+    min: 1,
+    max: 5,
+    default: null,
+  },
+  laserType: {
+    type: String,
+    enum: ['Diode', 'Alexandrite', null],
+    default: null,
+  },
   notes: {
     type: String,
     trim: true
