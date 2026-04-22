@@ -55,7 +55,7 @@ router.get('/:id', auth, async (req, res) => {
 // Create new appointment
 router.post('/', auth, async (req, res) => {
   try {
-    const { customerId, date, treatments, notes } = req.body;
+    const { customerId, date, treatments, notes, skinType, laserType } = req.body;
 
     // Verify customer belongs to salon
     const customer = await Customer.findOne({
@@ -76,7 +76,9 @@ router.post('/', auth, async (req, res) => {
       customerId,
       date: new Date(date),
       treatments,
-      notes
+      notes,
+      skinType: skinType ?? null,
+      laserType: laserType ?? null,
     });
 
     await appointment.save();
@@ -90,7 +92,7 @@ router.post('/', auth, async (req, res) => {
 // Update appointment
 router.put('/:id', auth, async (req, res) => {
   try {
-    const { date, treatments, notes } = req.body;
+    const { date, treatments, notes, skinType, laserType } = req.body;
 
     if (treatments && treatments.length === 0) {
       return res.status(400).json({ message: 'At least one treatment is required' });
@@ -100,6 +102,8 @@ router.put('/:id', auth, async (req, res) => {
     if (date) updateData.date = new Date(date);
     if (treatments) updateData.treatments = treatments;
     if (notes !== undefined) updateData.notes = notes;
+    if (skinType !== undefined) updateData.skinType = skinType ?? null;
+    if (laserType !== undefined) updateData.laserType = laserType ?? null;
 
     const appointment = await Appointment.findOneAndUpdate(
       { _id: req.params.id, salonId: req.salon._id },
