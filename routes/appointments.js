@@ -159,7 +159,7 @@ router.get('/customer/:customerId/progress', auth, async (req, res) => {
       customerId: req.params.customerId
     })
       .sort({ date: 1 })
-      .select('date treatments');
+      .select('date treatments skinType laserType');
 
     // Calculate progress by zone
     const zoneProgress = {};
@@ -180,11 +180,14 @@ router.get('/customer/:customerId/progress', auth, async (req, res) => {
         
         zoneProgress[zone].treatments.push({
           date: appointment.date,
+          zone: treatment.zone,
           power: treatment.power,
           pulseWidth: treatment.pulseWidth ?? null,
           frequency: treatment.frequency ?? null,
           price: treatment.price ?? 0,
           notes: appointment.notes ?? null,
+          skinType: appointment.skinType ?? null,
+          laserType: appointment.laserType ?? null,
         });
         zoneProgress[zone].totalVisits++;
         zoneProgress[zone].maxPower = Math.max(zoneProgress[zone].maxPower, treatment.power);
