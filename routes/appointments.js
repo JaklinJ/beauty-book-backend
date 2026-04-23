@@ -31,6 +31,24 @@ router.get('/customer/:customerId', auth, async (req, res) => {
   }
 });
 
+// Get all appointments for the salon in a date range (for calendar)
+router.get('/range', auth, async (req, res) => {
+  try {
+    const { from, to } = req.query;
+    const appointments = await Appointment.find({
+      salonId: req.salon._id,
+      date: { $gte: new Date(from), $lte: new Date(to) },
+    })
+      .populate('customerId', 'name phone')
+      .sort({ date: 1 })
+      .select('-__v');
+    res.json(appointments);
+  } catch (error) {
+    console.error('Get range appointments error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 // Get single appointment
 router.get('/:id', auth, async (req, res) => {
   try {
@@ -55,7 +73,7 @@ router.get('/:id', auth, async (req, res) => {
 // Create new appointment
 router.post('/', auth, async (req, res) => {
   try {
-    const { customerId, date, treatments, notes, skinType, laserType } = req.body;
+    const { customerId, date, treatments, notes, skinType, laserType, cooling, skinReaction } = req.body;
 
     // Verify customer belongs to salon
     const customer = await Customer.findOne({
@@ -79,6 +97,8 @@ router.post('/', auth, async (req, res) => {
       notes,
       skinType: skinType ?? null,
       laserType: laserType ?? null,
+      cooling: cooling ?? null,
+      skinReaction: skinReaction ?? null,
     });
 
     await appointment.save();
@@ -92,7 +112,7 @@ router.post('/', auth, async (req, res) => {
 // Update appointment
 router.put('/:id', auth, async (req, res) => {
   try {
-    const { date, treatments, notes, skinType, laserType } = req.body;
+    const { date, treatments, notes, skinType, laserType, cooling, skinReaction } = req.body;
 
     if (treatments && treatments.length === 0) {
       return res.status(400).json({ message: 'At least one treatment is required' });
@@ -104,6 +124,8 @@ router.put('/:id', auth, async (req, res) => {
     if (notes !== undefined) updateData.notes = notes;
     if (skinType !== undefined) updateData.skinType = skinType ?? null;
     if (laserType !== undefined) updateData.laserType = laserType ?? null;
+    if (cooling !== undefined) updateData.cooling = cooling ?? null;
+    if (skinReaction !== undefined) updateData.skinReaction = skinReaction ?? null;
 
     const appointment = await Appointment.findOneAndUpdate(
       { _id: req.params.id, salonId: req.salon._id },
@@ -188,6 +210,8 @@ router.get('/customer/:customerId/progress', auth, async (req, res) => {
           notes: appointment.notes ?? null,
           skinType: appointment.skinType ?? null,
           laserType: appointment.laserType ?? null,
+          cooling: appointment.cooling ?? null,
+          skinReaction: appointment.skinReaction ?? null,
         });
         zoneProgress[zone].totalVisits++;
         zoneProgress[zone].maxPower = Math.max(zoneProgress[zone].maxPower, treatment.power);

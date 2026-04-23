@@ -55,6 +55,16 @@ const appointmentSchema = new mongoose.Schema({
     enum: ['Diode', 'Alexandrite', null],
     default: null,
   },
+  cooling: {
+    type: String,
+    enum: ['low', 'medium', 'high', null],
+    default: null,
+  },
+  skinReaction: {
+    type: String,
+    enum: ['none', 'mild', 'moderate', 'severe', null],
+    default: null,
+  },
   notes: {
     type: String,
     trim: true
