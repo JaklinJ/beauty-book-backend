@@ -65,6 +65,10 @@ const appointmentSchema = new mongoose.Schema({
     enum: ['none', 'mild', 'moderate', 'severe', null],
     default: null,
   },
+  duration: {
+    type: Number,
+    default: null,
+  },
   notes: {
     type: String,
     trim: true

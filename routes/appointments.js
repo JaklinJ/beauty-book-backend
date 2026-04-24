@@ -73,7 +73,7 @@ router.get('/:id', auth, async (req, res) => {
 // Create new appointment
 router.post('/', auth, async (req, res) => {
   try {
-    const { customerId, date, treatments, notes, skinType, laserType, cooling, skinReaction } = req.body;
+    const { customerId, date, treatments, notes, skinType, laserType, cooling, skinReaction, duration } = req.body;
 
     // Verify customer belongs to salon
     const customer = await Customer.findOne({
@@ -99,6 +99,7 @@ router.post('/', auth, async (req, res) => {
       laserType: laserType ?? null,
       cooling: cooling ?? null,
       skinReaction: skinReaction ?? null,
+      duration: duration ?? null,
     });
 
     await appointment.save();
