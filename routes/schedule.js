@@ -25,7 +25,7 @@ router.get('/range', auth, async (req, res) => {
 // Create a schedule entry
 router.post('/', auth, async (req, res) => {
   try {
-    const { customerId, date, zones, duration, notes } = req.body;
+    const { customerId, date, zones, duration, totalPrice, notes } = req.body;
 
     const customer = await Customer.findOne({ _id: customerId, salonId: req.salon._id });
     if (!customer) return res.status(404).json({ message: 'Customer not found' });
@@ -36,6 +36,7 @@ router.post('/', auth, async (req, res) => {
       date: new Date(date),
       zones: zones || [],
       duration: duration ?? null,
+      totalPrice: totalPrice ?? null,
       notes: notes ?? null,
     });
 

@@ -23,6 +23,10 @@ const scheduleEntrySchema = new mongoose.Schema({
     type: Number,
     default: null,
   },
+  totalPrice: {
+    type: Number,
+    default: null,
+  },
   notes: {
     type: String,
     trim: true,
