@@ -16,6 +16,7 @@ app.use('/api/auth', require('./routes/auth'));
 app.use('/api/customers', require('./routes/customers'));
 app.use('/api/salons', require('./routes/salons'));
 app.use('/api/appointments', require('./routes/appointments'));
+app.use('/api/schedule', require('./routes/schedule'));
 app.use('/api/pricelists', require('./routes/pricelists'));
 app.use('/api/revenue', require('./routes/revenue'));
 app.use('/privacy', require('./routes/privacy'));

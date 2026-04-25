@@ -37,7 +37,7 @@ const appointmentSchema = new mongoose.Schema({
   customerId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Customer',
-    required: true
+    required: true,
   },
   date: {
     type: Date,
@@ -72,6 +72,10 @@ const appointmentSchema = new mongoose.Schema({
   notes: {
     type: String,
     trim: true
+  },
+  isScheduled: {
+    type: Boolean,
+    default: false,
   }
 }, {
   timestamps: true

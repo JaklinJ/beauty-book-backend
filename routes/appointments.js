@@ -19,7 +19,8 @@ router.get('/customer/:customerId', auth, async (req, res) => {
 
     const appointments = await Appointment.find({
       salonId: req.salon._id,
-      customerId: req.params.customerId
+      customerId: req.params.customerId,
+      isScheduled: { $ne: true },
     })
       .sort({ date: -1 })
       .select('-__v');
@@ -73,7 +74,7 @@ router.get('/:id', auth, async (req, res) => {
 // Create new appointment
 router.post('/', auth, async (req, res) => {
   try {
-    const { customerId, date, treatments, notes, skinType, laserType, cooling, skinReaction, duration } = req.body;
+    const { customerId, date, treatments, notes, skinType, laserType, cooling, skinReaction, duration, isScheduled } = req.body;
 
     // Verify customer belongs to salon
     const customer = await Customer.findOne({
@@ -100,6 +101,7 @@ router.post('/', auth, async (req, res) => {
       cooling: cooling ?? null,
       skinReaction: skinReaction ?? null,
       duration: duration ?? null,
+      isScheduled: isScheduled ?? false,
     });
 
     await appointment.save();
@@ -179,7 +181,8 @@ router.get('/customer/:customerId/progress', auth, async (req, res) => {
 
     const appointments = await Appointment.find({
       salonId: req.salon._id,
-      customerId: req.params.customerId
+      customerId: req.params.customerId,
+      isScheduled: { $ne: true },
     })
       .sort({ date: 1 })
       .select('date treatments skinType laserType');
