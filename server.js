@@ -18,6 +18,7 @@ app.use('/api/salons', require('./routes/salons'));
 app.use('/api/appointments', require('./routes/appointments'));
 app.use('/api/schedule', require('./routes/schedule'));
 app.use('/api/pricelists', require('./routes/pricelists'));
+app.use('/api/zonedurations', require('./routes/zonedurations'));
 app.use('/api/revenue', require('./routes/revenue'));
 app.use('/privacy', require('./routes/privacy'));
 
