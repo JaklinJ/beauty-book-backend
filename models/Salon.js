@@ -27,6 +27,11 @@ const salonSchema = new mongoose.Schema({
     type: String,
     trim: true
   },
+  currency: {
+    type: String,
+    trim: true,
+    default: 'EUR',
+  },
 }, {
   timestamps: true
 });

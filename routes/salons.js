@@ -9,7 +9,7 @@ const mongoose = require('mongoose');
 //update salon info
 router.put("/profile", auth, async (req, res) => {
   try {
-    const { name, phone, address } = req.body;
+    const { name, phone, address, currency } = req.body;
     const email = req.body.email?.toLowerCase().trim();
 
     if (email && email !== req.salon.email) {
@@ -24,6 +24,7 @@ router.put("/profile", auth, async (req, res) => {
       email,
       phone,
       address,
+      ...(currency && { currency }),
     });
 
     if (!salon) {

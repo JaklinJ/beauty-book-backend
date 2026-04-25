@@ -16,6 +16,7 @@ const salonPayload = (salon) => ({
   email: salon.email,
   phone: salon.phone,
   address: salon.address,
+  currency: salon.currency || 'EUR',
 });
 
 // Register salon
