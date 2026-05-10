@@ -48,6 +48,32 @@ router.post('/', auth, async (req, res) => {
   }
 });
 
+// Update a schedule entry
+router.put('/:id', auth, async (req, res) => {
+  try {
+    const { customerId, date, zones, duration, totalPrice, notes } = req.body;
+    const entry = await ScheduleEntry.findOne({ _id: req.params.id, salonId: req.salon._id });
+    if (!entry) return res.status(404).json({ message: 'Schedule entry not found' });
+
+    if (customerId) {
+      const customer = await Customer.findOne({ _id: customerId, salonId: req.salon._id });
+      if (!customer) return res.status(404).json({ message: 'Customer not found' });
+      entry.customerId = customerId;
+    }
+    if (date !== undefined) entry.date = new Date(date);
+    if (zones !== undefined) entry.zones = zones;
+    if (duration !== undefined) entry.duration = duration ?? null;
+    if (totalPrice !== undefined) entry.totalPrice = totalPrice ?? null;
+    if (notes !== undefined) entry.notes = notes ?? null;
+
+    await entry.save();
+    res.json(entry);
+  } catch (error) {
+    console.error('Update schedule entry error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 // Delete a schedule entry
 router.delete('/:id', auth, async (req, res) => {
   try {
