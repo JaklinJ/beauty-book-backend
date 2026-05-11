@@ -25,6 +25,11 @@ const treatmentSchema = new mongoose.Schema({
     type: Number,
     default: 0,
     min: 0
+  },
+  gender: {
+    type: String,
+    enum: ['woman', 'man', null],
+    default: null,
   }
 }, { _id: false });
 
