@@ -61,7 +61,7 @@ router.get("/:id", auth, async (req, res) => {
 // Create new customer
 router.post("/", auth, async (req, res) => {
   try {
-    const { name, phone, email, notes } = req.body;
+    const { name, phone, email, notes, gender } = req.body;
 
     const customer = new Customer({
       salonId: req.salon._id,
@@ -69,6 +69,7 @@ router.post("/", auth, async (req, res) => {
       phone,
       email,
       notes,
+      gender,
     });
 
     await customer.save();
@@ -82,11 +83,11 @@ router.post("/", auth, async (req, res) => {
 // Update customer
 router.put("/:id", auth, async (req, res) => {
   try {
-    const { name, phone, email, notes } = req.body;
+    const { name, phone, email, notes, gender } = req.body;
 
     const customer = await Customer.findOneAndUpdate(
       { _id: req.params.id, salonId: req.salon._id },
-      { name, phone, email, notes },
+      { name, phone, email, notes, gender },
       { new: true, runValidators: true },
     ).select("-__v");
 
