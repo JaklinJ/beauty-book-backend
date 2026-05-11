@@ -56,7 +56,7 @@ router.get('/', auth, async (req, res) => {
     const totalRevenue = byZone.reduce((sum, z) => sum + z.revenue, 0);
     const totalSessions = byZone.reduce((sum, z) => sum + z.sessions, 0);
 
-    res.json({ totalRevenue, totalSessions, appointmentCount, byZone, year, month });
+    res.json({ totalRevenue, totalSessions, appointmentCount, byZone });
   } catch (error) {
     console.error('Revenue error:', error);
     res.status(500).json({ message: 'Server error' });
