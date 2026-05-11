@@ -23,6 +23,11 @@ const customerSchema = new mongoose.Schema({
   notes: {
     type: String,
     trim: true
+  },
+  gender: {
+    type: String,
+    enum: ['woman', 'man', null],
+    default: null,
   }
 }, {
   timestamps: true
