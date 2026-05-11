@@ -4,16 +4,22 @@ const auth = require('../middleware/auth');
 const Appointment = require('../models/Appointment');
 const router = express.Router();
 
-// GET /api/revenue?year=2026&month=4&zone=zoneLegs
+// GET /api/revenue?from=ISO&to=ISO&zone=zoneLegs  (or legacy ?year=&month=)
 router.get('/', auth, async (req, res) => {
   try {
     const salonId = new mongoose.Types.ObjectId(req.salon._id);
-    const year  = parseInt(req.query.year)  || new Date().getFullYear();
-    const month = parseInt(req.query.month) || new Date().getMonth() + 1;
-    const zone  = req.query.zone || null; // null = all zones
+    const zone  = req.query.zone || null;
 
-    const startDate = new Date(year, month - 1, 1);
-    const endDate   = new Date(year, month, 1);
+    let startDate, endDate;
+    if (req.query.from && req.query.to) {
+      startDate = new Date(req.query.from);
+      endDate   = new Date(req.query.to);
+    } else {
+      const year  = parseInt(req.query.year)  || new Date().getFullYear();
+      const month = parseInt(req.query.month) || new Date().getMonth() + 1;
+      startDate = new Date(year, month - 1, 1);
+      endDate   = new Date(year, month, 1);
+    }
 
     const baseMatch = {
       salonId,
