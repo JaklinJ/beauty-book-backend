@@ -1,6 +1,9 @@
 const express = require("express");
 const Customer = require("../models/Customer");
 const Appointment = require("../models/Appointment");
+const ScheduleEntry = require("../models/ScheduleEntry");
+const PriceList = require("../models/PriceList");
+const ZoneDuration = require("../models/ZoneDuration");
 const auth = require("../middleware/auth");
 const router = express.Router();
 const Salon = require("../models/Salon");
@@ -48,6 +51,9 @@ router.delete("/account", auth, async (req, res) => {
 
     await Appointment.deleteMany({ salonId: salonId }).session(session);
     await Customer.deleteMany({ salonId: salonId }).session(session);
+    await ScheduleEntry.deleteMany({ salonId: salonId }).session(session);
+    await PriceList.deleteMany({ salonId: salonId }).session(session);
+    await ZoneDuration.deleteMany({ salonId: salonId }).session(session);
     const salon = await Salon.findByIdAndDelete(salonId).session(session);
 
     if (!salon) {
