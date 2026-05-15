@@ -81,7 +81,13 @@ const appointmentSchema = new mongoose.Schema({
   isScheduled: {
     type: Boolean,
     default: false,
-  }
+  },
+  photos: [{
+    zone:       { type: String, required: true },
+    url:        { type: String, required: true },
+    publicId:   { type: String, required: true },
+    uploadedAt: { type: Date, default: Date.now },
+  }],
 }, {
   timestamps: true
 });

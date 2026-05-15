@@ -2,6 +2,7 @@ const express = require('express');
 const Appointment = require('../models/Appointment');
 const Customer = require('../models/Customer');
 const auth = require('../middleware/auth');
+const { cloudinary, upload } = require('../services/cloudinary');
 const router = express.Router();
 
 // Get all appointments for a customer
@@ -185,7 +186,7 @@ router.get('/customer/:customerId/progress', auth, async (req, res) => {
       isScheduled: { $ne: true },
     })
       .sort({ date: 1 })
-      .select('date treatments skinType laserType');
+      .select('date treatments skinType laserType photos');
 
     // Calculate progress by zone
     const zoneProgress = {};
@@ -234,6 +235,31 @@ router.get('/customer/:customerId/progress', auth, async (req, res) => {
       }
     });
 
+    // Aggregate photos by zone
+    const photosByZone = {};
+    appointments.forEach(appt => {
+      (appt.photos || []).forEach(photo => {
+        const zone = photo.zone;
+        if (!photosByZone[zone]) photosByZone[zone] = [];
+        photosByZone[zone].push({
+          _id:           photo._id,
+          url:           photo.url,
+          uploadedAt:    photo.uploadedAt,
+          appointmentId: appt._id,
+        });
+      });
+    });
+    Object.keys(photosByZone).forEach(zone => {
+      photosByZone[zone].sort((a, b) => new Date(a.uploadedAt) - new Date(b.uploadedAt));
+    });
+    Object.keys(zoneProgress).forEach(zone => {
+      const photos = photosByZone[zone] || [];
+      zoneProgress[zone].photoCount  = photos.length;
+      zoneProgress[zone].firstPhoto  = photos.length > 0 ? photos[0] : null;
+      zoneProgress[zone].lastPhoto   = photos.length > 1 ? photos[photos.length - 1] : null;
+      zoneProgress[zone].allPhotos   = photos;
+    });
+
     res.json({
       customerId: req.params.customerId,
       totalAppointments: appointments.length,
@@ -241,6 +267,59 @@ router.get('/customer/:customerId/progress', auth, async (req, res) => {
     });
   } catch (error) {
     console.error('Get progress error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Upload a progress photo for an appointment zone
+router.post('/:id/photos', auth, upload.single('photo'), async (req, res) => {
+  try {
+    const appointment = await Appointment.findOne({
+      _id: req.params.id,
+      salonId: req.salon._id,
+    });
+    if (!appointment) {
+      return res.status(404).json({ message: 'Appointment not found' });
+    }
+    const { zone } = req.body;
+    if (!zone) return res.status(400).json({ message: 'Zone is required' });
+    if (!req.file) return res.status(400).json({ message: 'Photo is required' });
+
+    appointment.photos.push({
+      zone,
+      url:       req.file.path,
+      publicId:  req.file.filename,
+      uploadedAt: new Date(),
+    });
+    await appointment.save();
+    const added = appointment.photos[appointment.photos.length - 1];
+    res.json({ photo: added });
+  } catch (error) {
+    console.error('Upload photo error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Delete a progress photo
+router.delete('/:id/photos/:photoId', auth, async (req, res) => {
+  try {
+    const appointment = await Appointment.findOne({
+      _id: req.params.id,
+      salonId: req.salon._id,
+    });
+    if (!appointment) {
+      return res.status(404).json({ message: 'Appointment not found' });
+    }
+    const photo = appointment.photos.id(req.params.photoId);
+    if (!photo) {
+      return res.status(404).json({ message: 'Photo not found' });
+    }
+    await cloudinary.uploader.destroy(photo.publicId);
+    appointment.photos.pull({ _id: req.params.photoId });
+    await appointment.save();
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Delete photo error:', error);
     res.status(500).json({ message: 'Server error' });
   }
 });
